@@ -7,17 +7,17 @@ import {
 import {
   Flex,
   HStack,
+  Heading,
   IconButton,
   Spacer,
-  Text,
 } from '@chakra-ui/react';
 
 function Navbar() {
   return (
     <Flex alignItems="center" bg="snow" p="1em">
-      <Text as="b" color="teal" fontSize="xl">
+      <Heading color="teal" size="md">
         FER-Game-Testing
-      </Text>
+      </Heading>
 
       <Spacer />
 
