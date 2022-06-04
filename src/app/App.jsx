@@ -7,12 +7,14 @@ import {
 } from '@chakra-ui/react';
 
 import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 import Video from './components/Video';
 
 function App() {
   return (
-    <Box bg="teal" h="100vh" w="100vw">
+    <Box h="100vh" w="100vw">
       <Grid h="100%" templateColumns="repeat(3, 1fr)" w="100%">
+        {/* Main Section */}
         <GridItem bg="mistyrose" colSpan={2}>
           <Flex direction="column" h="100%">
             <Box>
@@ -24,7 +26,10 @@ function App() {
           </Flex>
         </GridItem>
 
-        <GridItem bg="black" colSpan={1} />
+        {/* Sidebar Section */}
+        <GridItem boxShadow="md">
+          <Sidebar />
+        </GridItem>
       </Grid>
     </Box>
   );
