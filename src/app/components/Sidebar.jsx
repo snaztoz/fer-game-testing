@@ -1,6 +1,7 @@
 import React from 'react';
 import { Grid, GridItem } from '@chakra-ui/react';
 
+import Log from './Log';
 import Stats from './Stats';
 
 function Sidebar() {
@@ -9,7 +10,9 @@ function Sidebar() {
       <GridItem>
         <Stats />
       </GridItem>
-      <GridItem>foo</GridItem>
+      <GridItem>
+        <Log />
+      </GridItem>
     </Grid>
   );
 }
