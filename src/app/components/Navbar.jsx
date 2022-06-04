@@ -23,20 +23,20 @@ function Navbar() {
 
       <HStack>
         <IconButton
-          ariaLabel="Start FER"
+          aria-label="Start FER"
           colorScheme="teal"
           icon={<BsFillPlayFill />}
           isRound
         />
         <IconButton
-          ariaLabel="Pause FER"
+          aria-label="Pause FER"
           colorScheme="teal"
           icon={<BsFillPauseFill />}
           isDisabled
           isRound
         />
         <IconButton
-          ariaLabel="Generate report"
+          aria-label="Generate report"
           colorScheme="teal"
           icon={<BsFileEarmarkTextFill />}
           isRound
