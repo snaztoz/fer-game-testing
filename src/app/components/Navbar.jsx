@@ -14,8 +14,8 @@ import {
 
 function Navbar() {
   return (
-    <Flex bg="snow" p="1em" alignItems="center">
-      <Text as="b" fontSize="xl" color="teal">
+    <Flex alignItems="center" bg="snow" p="1em">
+      <Text as="b" color="teal" fontSize="xl">
         FER-Game-Testing
       </Text>
 
