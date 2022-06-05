@@ -9,8 +9,9 @@ import {
   Td,
   Tr,
 } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 
-function Stats() {
+export default function Stats() {
   const [elapsed, setElapsed] = useState(0);
 
   useEffect(() => {
@@ -37,15 +38,17 @@ function Stats() {
           <Tbody>
             <Tr>
               <Td>Status</Td>
-              <Td><Badge colorScheme="green">Running</Badge></Td>
+              <Td w="50%">
+                <StatusBadge />
+              </Td>
             </Tr>
             <Tr>
               <Td>Avg. Emotion</Td>
-              <Td>Happy</Td>
+              <Td w="50%">Happy</Td>
             </Tr>
             <Tr>
               <Td>Elapsed time</Td>
-              <Td>{`${elapsed}s`}</Td>
+              <Td w="50%">{`${elapsed}s`}</Td>
             </Tr>
           </Tbody>
         </Table>
@@ -54,4 +57,20 @@ function Stats() {
   );
 }
 
-export default Stats;
+//
+// Private components
+//
+
+function StatusBadge() {
+  const recognizerStatus = useSelector((state) => state.recognizer.status);
+
+  const colorScheme = {
+    running: 'green',
+    stopped: 'red',
+    paused: 'gray',
+  }[recognizerStatus];
+
+  return (
+    <Badge colorScheme={colorScheme}>{recognizerStatus}</Badge>
+  );
+}
