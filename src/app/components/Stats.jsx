@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Badge,
   Box,
@@ -12,18 +12,7 @@ import {
 import { useSelector } from 'react-redux';
 
 export default function Stats() {
-  const [elapsed, setElapsed] = useState(0);
-
-  useEffect(() => {
-    const tick = setInterval(
-      () => setElapsed(elapsed + 1),
-      1000,
-    );
-
-    return function cleanup() {
-      clearInterval(tick);
-    };
-  });
+  const time = useSelector((state) => state.recognizer.time);
 
   return (
     <Box h="100%">
@@ -48,7 +37,7 @@ export default function Stats() {
             </Tr>
             <Tr>
               <Td>Elapsed time</Td>
-              <Td w="50%">{`${elapsed}s`}</Td>
+              <Td w="50%">{time}</Td>
             </Tr>
           </Tbody>
         </Table>

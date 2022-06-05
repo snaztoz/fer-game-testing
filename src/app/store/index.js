@@ -1,8 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
-import recognizerReducer from './reducer/recognizer';
 
-export default configureStore({
+import recognizerReducer, { timer, updateTime } from './reducer/recognizer';
+
+const store = configureStore({
   reducer: {
     recognizer: recognizerReducer,
   },
 });
+
+timer.addEventListener('secondsUpdated', () => {
+  store.dispatch(updateTime(timer.getTimeValues().toString()));
+});
+
+export default store;
