@@ -4,7 +4,7 @@ import { Grid, GridItem } from '@chakra-ui/react';
 import Log from './Log';
 import Stats from './Stats';
 
-function Sidebar() {
+export default function Sidebar() {
   return (
     <Grid h="100%" templateRows="repeat(2, 1fr)">
       <GridItem>
@@ -16,5 +16,3 @@ function Sidebar() {
     </Grid>
   );
 }
-
-export default Sidebar;

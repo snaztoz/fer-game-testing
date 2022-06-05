@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
-function Log() {
+export default function Log() {
   const logs = useSelector((state) => state.log.buffer);
 
   const logItems = logs
@@ -36,5 +36,3 @@ function Log() {
     </Flex>
   );
 }
-
-export default Log;

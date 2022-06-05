@@ -10,7 +10,7 @@ import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import Video from './components/Video';
 
-function App() {
+export default function App() {
   return (
     <Box h="100vh" w="100vw">
       <Grid h="100%" templateColumns="repeat(3, 1fr)" w="100%">
@@ -34,5 +34,3 @@ function App() {
     </Box>
   );
 }
-
-export default App;
