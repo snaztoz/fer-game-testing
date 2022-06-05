@@ -11,6 +11,7 @@ import {
   Heading,
   IconButton,
   Spacer,
+  Tooltip,
 } from '@chakra-ui/react';
 import {
   useSelector,
@@ -44,12 +45,7 @@ export default function Navbar() {
 
         <PauseButton />
 
-        <IconButton
-          aria-label="Generate report"
-          colorScheme="teal"
-          icon={<BsFileEarmarkTextFill />}
-          isRound
-        />
+        <GenerateReportButton />
       </HStack>
     </Flex>
   );
@@ -60,19 +56,30 @@ export default function Navbar() {
 //
 
 function StartButton() {
+  const recognizerStatus = useSelector((state) => state.recognizer.status);
   const dispatch = useDispatch();
 
   return (
-    <IconButton
-      aria-label="Start FER"
-      colorScheme="teal"
-      icon={<BsFillPlayFill />}
-      isRound
-      onClick={() => {
-        dispatch(start());
-        dispatch(log('FER is running'));
-      }}
-    />
+    <Tooltip
+      fontSize="sm"
+      hasArrow
+      label={recognizerStatus === 'stopped'
+        ? 'Start'
+        : 'Resume'}
+    >
+      <span>
+        <IconButton
+          aria-label="Start FER"
+          colorScheme="teal"
+          icon={<BsFillPlayFill />}
+          isRound
+          onClick={() => {
+            dispatch(start());
+            dispatch(log('FER is running'));
+          }}
+        />
+      </span>
+    </Tooltip>
   );
 }
 
@@ -80,16 +87,24 @@ function StopButton() {
   const dispatch = useDispatch();
 
   return (
-    <IconButton
-      aria-label="Start FER"
-      colorScheme="red"
-      icon={<BsFillStopFill />}
-      isRound
-      onClick={() => {
-        dispatch(stop());
-        dispatch(log('FER is stopped'));
-      }}
-    />
+    <Tooltip
+      fontSize="sm"
+      hasArrow
+      label="Stop"
+    >
+      <span>
+        <IconButton
+          aria-label="Start FER"
+          colorScheme="red"
+          icon={<BsFillStopFill />}
+          isRound
+          onClick={() => {
+            dispatch(stop());
+            dispatch(log('FER is stopped'));
+          }}
+        />
+      </span>
+    </Tooltip>
   );
 }
 
@@ -100,16 +115,50 @@ function PauseButton() {
   const isDisabled = recognizerStatus !== 'running';
 
   return (
-    <IconButton
-      aria-label="Pause FER"
-      colorScheme="teal"
-      icon={<BsFillPauseFill />}
+    <Tooltip
+      fontSize="sm"
+      hasArrow
       isDisabled={isDisabled}
-      isRound
-      onClick={() => {
-        dispatch(pause());
-        dispatch(log('FER is paused'));
-      }}
-    />
+      label="Pause"
+    >
+      <span>
+        <IconButton
+          aria-label="Pause FER"
+          colorScheme="teal"
+          icon={<BsFillPauseFill />}
+          isDisabled={isDisabled}
+          isRound
+          onClick={() => {
+            dispatch(pause());
+            dispatch(log('FER is paused'));
+          }}
+        />
+      </span>
+    </Tooltip>
+  );
+}
+
+function GenerateReportButton() {
+  const recognizerStatus = useSelector((state) => state.recognizer.status);
+
+  const isDisabled = recognizerStatus === 'running';
+
+  return (
+    <Tooltip
+      fontSize="sm"
+      hasArrow
+      isDisabled={isDisabled}
+      label="Generate Report"
+    >
+      <span>
+        <IconButton
+          aria-label="Generate report"
+          colorScheme="teal"
+          icon={<BsFileEarmarkTextFill />}
+          isDisabled={isDisabled}
+          isRound
+        />
+      </span>
+    </Tooltip>
   );
 }
