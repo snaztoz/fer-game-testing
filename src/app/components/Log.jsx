@@ -1,35 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Box,
   Flex,
   Heading,
   Text,
 } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 
 function Log() {
-  const [logs, setLogs] = useState([]);
-
-  useEffect(() => {
-    const tick = setInterval(
-      () => {
-        const time = new Date()
-          .toLocaleString('en-GB', { timeZone: 'UTC' });
-
-        const message = 'Emotion detected: Happy (99,3%)';
-        const log = `[${time}] ${message}`;
-
-        setLogs(logs.concat([log]));
-      },
-      5000,
-    );
-
-    return function cleanup() {
-      clearInterval(tick);
-    };
-  });
+  const logs = useSelector((state) => state.log.buffer);
 
   const logItems = logs
-    .map((log, i) => <Text key={i} fontSize="xs">{log}</Text>); // eslint-disable-line react/no-array-index-key
+    .map((log) => (
+      <Text key={log.id} fontSize="xs">
+        {`[${log.timestamp}] ${log.message}`}
+      </Text>
+    ));
 
   return (
     <Flex

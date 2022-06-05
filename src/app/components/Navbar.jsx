@@ -17,6 +17,7 @@ import {
   useDispatch,
 } from 'react-redux';
 
+import { log } from '../store/reducer/log';
 import {
   start,
   stop,
@@ -67,7 +68,10 @@ function StartButton() {
       colorScheme="teal"
       icon={<BsFillPlayFill />}
       isRound
-      onClick={() => dispatch(start())}
+      onClick={() => {
+        dispatch(start());
+        dispatch(log('FER is running'));
+      }}
     />
   );
 }
@@ -81,7 +85,10 @@ function StopButton() {
       colorScheme="red"
       icon={<BsFillStopFill />}
       isRound
-      onClick={() => dispatch(stop())}
+      onClick={() => {
+        dispatch(stop());
+        dispatch(log('FER is stopped'));
+      }}
     />
   );
 }
@@ -99,7 +106,10 @@ function PauseButton() {
       icon={<BsFillPauseFill />}
       isDisabled={isDisabled}
       isRound
-      onClick={() => dispatch(pause())}
+      onClick={() => {
+        dispatch(pause());
+        dispatch(log('FER is paused'));
+      }}
     />
   );
 }
