@@ -15,7 +15,7 @@ function App() {
     <Box h="100vh" w="100vw">
       <Grid h="100%" templateColumns="repeat(3, 1fr)" w="100%">
         {/* Main Section */}
-        <GridItem bg="mistyrose" colSpan={2}>
+        <GridItem colSpan={2}>
           <Flex direction="column" h="100%">
             <Box>
               <Navbar />
