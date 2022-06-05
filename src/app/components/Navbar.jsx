@@ -3,6 +3,7 @@ import {
   BsFileEarmarkTextFill,
   BsFillPauseFill,
   BsFillPlayFill,
+  BsFillStopFill,
 } from 'react-icons/bs';
 import {
   Flex,
@@ -11,8 +12,22 @@ import {
   IconButton,
   Spacer,
 } from '@chakra-ui/react';
+import {
+  useSelector,
+  useDispatch,
+} from 'react-redux';
 
-function Navbar() {
+import {
+  start,
+  stop,
+  pause,
+} from '../store/reducer/recognizer';
+
+export default function Navbar() {
+  const recognizerStatus = useSelector((state) => state.recognizer.status);
+
+  const isRecognizerRunning = recognizerStatus === 'running';
+
   return (
     <Flex alignItems="center" bg="snow" p="1em">
       <Heading color="teal" size="md">
@@ -22,19 +37,12 @@ function Navbar() {
       <Spacer />
 
       <HStack>
-        <IconButton
-          aria-label="Start FER"
-          colorScheme="teal"
-          icon={<BsFillPlayFill />}
-          isRound
-        />
-        <IconButton
-          aria-label="Pause FER"
-          colorScheme="teal"
-          icon={<BsFillPauseFill />}
-          isDisabled
-          isRound
-        />
+        {isRecognizerRunning
+          ? <StopButton />
+          : <StartButton />}
+
+        <PauseButton />
+
         <IconButton
           aria-label="Generate report"
           colorScheme="teal"
@@ -46,4 +54,52 @@ function Navbar() {
   );
 }
 
-export default Navbar;
+//
+// Private components
+//
+
+function StartButton() {
+  const dispatch = useDispatch();
+
+  return (
+    <IconButton
+      aria-label="Start FER"
+      colorScheme="teal"
+      icon={<BsFillPlayFill />}
+      isRound
+      onClick={() => dispatch(start())}
+    />
+  );
+}
+
+function StopButton() {
+  const dispatch = useDispatch();
+
+  return (
+    <IconButton
+      aria-label="Start FER"
+      colorScheme="red"
+      icon={<BsFillStopFill />}
+      isRound
+      onClick={() => dispatch(stop())}
+    />
+  );
+}
+
+function PauseButton() {
+  const recognizerStatus = useSelector((state) => state.recognizer.status);
+  const dispatch = useDispatch();
+
+  const isDisabled = recognizerStatus !== 'running';
+
+  return (
+    <IconButton
+      aria-label="Pause FER"
+      colorScheme="teal"
+      icon={<BsFillPauseFill />}
+      isDisabled={isDisabled}
+      isRound
+      onClick={() => dispatch(pause())}
+    />
+  );
+}
