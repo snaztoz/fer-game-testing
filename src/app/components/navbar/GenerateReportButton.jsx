@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 export default function GenerateReportButton() {
   const recognizerStatus = useSelector((state) => state.recognizer.status);
 
-  const isDisabled = recognizerStatus === 'running';
+  const isDisabled = recognizerStatus !== 'stopped';
 
   return (
     <Tooltip
