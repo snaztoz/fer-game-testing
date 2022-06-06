@@ -10,11 +10,16 @@ export const recognizerSlice = createSlice({
   name: 'recognizer',
 
   initialState: {
+    isCamActive: false,
     status: 'stopped',
     time: '00:00:00',
   },
 
   reducers: {
+    toggleCam: (state) => {
+      state.isCamActive = !state.isCamActive;
+    },
+
     start: (state) => {
       if (state.status === 'stopped') {
         state.time = '00:00:00';
@@ -40,9 +45,10 @@ export const recognizerSlice = createSlice({
 });
 
 export const {
-  start,
   pause,
+  start,
   stop,
+  toggleCam,
   updateTime,
 } = recognizerSlice.actions;
 

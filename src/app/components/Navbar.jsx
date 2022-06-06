@@ -11,6 +11,7 @@ import GenerateReportButton from './navbar/GenerateReportButton';
 import PauseButton from './navbar/PauseButton';
 import StartButton from './navbar/StartButton';
 import StopButton from './navbar/StopButton';
+import CamActivationButton from './navbar/CamActivationButton';
 
 export default function Navbar() {
   const recognizerStatus = useSelector((state) => state.recognizer.status);
@@ -26,6 +27,8 @@ export default function Navbar() {
       <Spacer />
 
       <HStack>
+        <CamActivationButton />
+
         {isRecognizerRunning
           ? <StopButton />
           : <StartButton />}
