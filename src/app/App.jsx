@@ -41,16 +41,15 @@ function App() {
 
   const faceDetection = async () => {
     setInterval(async () => {
+      // eslint-disable-next-line max-len
+      const detections = await faceapi.detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
       canvasRef.current.innerHTML = faceapi.createCanvasFromMedia(videoRef.current);
       const displaySize = {
         width: videoWidth,
         height: videoHeight,
       };
       faceapi.matchDimensions(canvasRef.current, displaySize);
-      // eslint-disable-next-line max-len
-      const detections = await faceapi.detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
       const resizedDetections = faceapi.resizeResults(detections, displaySize);
-      canvasRef.current.getContext('2d').clearRect(0, 0, videoWidth, videoHeight);
       faceapi.draw.drawDetections(canvasRef.current, resizedDetections);
       faceapi.draw.drawFaceLandmarks(canvasRef.current, resizedDetections);
       faceapi.draw.drawFaceExpressions(canvasRef.current, resizedDetections);
