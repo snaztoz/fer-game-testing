@@ -1,29 +1,46 @@
-/* eslint-disable max-len */
 /* eslint-disable jsx-a11y/media-has-caption */
-/* eslint-disable no-undef */
-import React, { useState, useRef, useEffect } from 'react';
-import * as faceapi from 'face-api.js';
+/* eslint-disable react/react-in-jsx-scope */
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-use-before-define */
+import { useRef, useEffect } from 'react';
 import './App.css';
+import * as faceapi from 'face-api.js';
 
-export default function App() {
+function App() {
   const videoHeight = 480;
   const videoWidth = 640;
-  const [initializing, setInitializing] = useState(false);
   const videoRef = useRef();
   const canvasRef = useRef();
 
-  const startVideo = () => {
-    navigator.getUserMedia({
-      video: {},
-    // eslint-disable-next-line no-return-assign
-    }, (stream) => videoRef.current.srcObject = stream);
+  useEffect(() => {
+    startVideo();
+
+    videoRef && loadModels();
+  }, []);
+
+  const loadModels = () => {
+    Promise.all([
+      faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+      faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+      faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+      faceapi.nets.faceExpressionNet.loadFromUri('/models'),
+    ]).then(() => {
+      faceDetection();
+    });
   };
 
-  const handleVideoOnPlay = () => {
+  const startVideo = () => {
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then((currentStream) => {
+        videoRef.current.srcObject = currentStream;
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+
+  const faceDetection = async () => {
     setInterval(async () => {
-      if (initializing) {
-        setInitializing(false);
-      }
       canvasRef.current.innerHTML = faceapi.createCanvasFromMedia(videoRef.current);
       const displaySize = {
         width: videoWidth,
@@ -41,27 +58,14 @@ export default function App() {
     }, 100);
   };
 
-  useEffect(() => {
-    const loadModels = async () => {
-      const MODEL_URL = `${process.env.PUBLIC_URL}/models`;
-      setInitializing(true);
-      Promise.all([
-        faceapi.nets.tinyFaceDetector.loadFromUri(MODEL_URL),
-        faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL),
-        faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL),
-        faceapi.nets.faceExpressionNet.loadFromUri(MODEL_URL),
-      ]).then(startVideo);
-    };
-    loadModels();
-  }, []);
-
   return (
     <div className="App">
-      <span>{initializing ? 'initializing' : 'Ready'}</span>
       <div className="display-flex justify-content-center">
-        <video ref={videoRef} autoPlay muted height={videoHeight} width={videoWidth} onPlay={handleVideoOnPlay} />
+        <video ref={videoRef} autoPlay muted height={videoHeight} width={videoWidth} />
         <canvas ref={canvasRef} className="position-absolute" />
       </div>
     </div>
   );
 }
+
+export default App;
