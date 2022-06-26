@@ -1,8 +1,9 @@
 import React from 'react';
-import Webcam from 'react-webcam';
 import { BsFillPersonFill } from 'react-icons/bs';
-import { Center, Icon } from '@chakra-ui/react';
+import { Box, Center, Icon } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
+
+import Webcam from './Webcam';
 
 export default function Video() {
   const isCamActive = useSelector((state) => state.recognizer.isCamActive);
@@ -10,8 +11,11 @@ export default function Video() {
   return (
     <Center bg="gray.900" h="100%" w="100%">
       {isCamActive
-        ? <Webcam width="70%" />
-        : (
+        ? (
+          <Box width="70%">
+            <Webcam />
+          </Box>
+        ) : (
           <Icon
             as={BsFillPersonFill}
             color="teal"

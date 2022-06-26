@@ -13,6 +13,12 @@ import { useSelector } from 'react-redux';
 
 export default function Stats() {
   const time = useSelector((state) => state.recognizer.time);
+  const expressions = useSelector((state) => state.recognizer.data.exprs);
+
+  const [dominantExpr, average] = Object
+    .entries(expressions)
+    .sort((a, b) => a[1] - b[1])
+    .reverse()[0];
 
   return (
     <Box h="100%">
@@ -33,7 +39,7 @@ export default function Stats() {
             </Tr>
             <Tr>
               <Td>Avg. Emotion</Td>
-              <Td w="50%">Happy</Td>
+              <Td w="50%">{dominantExpr} ({average})</Td>
             </Tr>
             <Tr>
               <Td>Elapsed time</Td>
