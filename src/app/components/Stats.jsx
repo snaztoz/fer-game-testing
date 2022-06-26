@@ -13,12 +13,6 @@ import { useSelector } from 'react-redux';
 
 export default function Stats() {
   const time = useSelector((state) => state.recognizer.time);
-  const expressions = useSelector((state) => state.recognizer.data.exprs);
-
-  const [dominantExpr, average] = Object
-    .entries(expressions)
-    .sort((a, b) => a[1] - b[1])
-    .reverse()[0];
 
   return (
     <Box h="100%">
@@ -39,7 +33,9 @@ export default function Stats() {
             </Tr>
             <Tr>
               <Td>Avg. Emotion</Td>
-              <Td w="50%">{dominantExpr} ({average})</Td>
+              <Td w="50%">
+                <ExpressionInfo />
+              </Td>
             </Tr>
             <Tr>
               <Td>Elapsed time</Td>
@@ -67,5 +63,36 @@ function StatusBadge() {
 
   return (
     <Badge colorScheme={colorScheme}>{recognizerStatus}</Badge>
+  );
+}
+
+const EXPRESSION_COLOR = {
+  angry: 'red',
+  disgusted: 'purple',
+  fearful: 'gray',
+  happy: 'yellow',
+  neutral: 'alphas',
+  sad: 'green',
+  surprised: 'pink',
+};
+
+function ExpressionInfo() {
+  const expressions = useSelector((state) => state.recognizer.data.exprs);
+
+  const [dominantExpr, average] = Object
+    .entries(expressions)
+    .sort((a, b) => a[1] - b[1])
+    .reverse()[0];
+
+  const averageInPercent = (average * 100).toFixed(2);
+
+  return (
+    <>
+      <Badge colorScheme={EXPRESSION_COLOR[dominantExpr]}>
+        {dominantExpr}
+      </Badge>
+      {' '}
+      ({averageInPercent}%)
+    </>
   );
 }
