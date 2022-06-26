@@ -5,8 +5,8 @@ import * as faceapi from 'face-api.js';
 import './video.css';
 
 export default function Video() {
-  const videoHeight = 480;
-  const videoWidth = 640;
+  const videoHeight = 720;
+  const videoWidth = 1080;
   const videoRef = useRef();
   const canvasRef = useRef();
 
@@ -51,7 +51,7 @@ export default function Video() {
       // draw detection results into canvas
       const resizedDetections = faceapi.resizeResults(detections, displaySize);
       faceapi.draw.drawDetections(canvasRef.current, resizedDetections);
-      faceapi.draw.drawFaceLandmarks(canvasRef.current, resizedDetections);
+      // faceapi.draw.drawFaceLandmarks(canvasRef.current, resizedDetections);
       faceapi.draw.drawFaceExpressions(canvasRef.current, resizedDetections);
       // log the detections result
       console.log(detections);
@@ -59,9 +59,11 @@ export default function Video() {
   };
 
   return (
-    <div className="display-flex justify-content-center">
-      <video ref={videoRef} autoPlay muted height={videoHeight} width={videoWidth} />
-      <canvas ref={canvasRef} className="position-absolute" />
+    <div className="app">
+      <div className="display-flex justify-content-center">
+        <video ref={videoRef} autoPlay muted height={videoHeight} width={videoWidth} />
+        <canvas ref={canvasRef} className="position-absolute" />
+      </div>
     </div>
   );
 }
