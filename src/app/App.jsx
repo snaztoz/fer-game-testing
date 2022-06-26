@@ -25,8 +25,6 @@ export default function App() {
             </Box>
           </Flex>
         </GridItem>
-
-        {/* Sidebar Section */}
         <GridItem boxShadow="md">
           <Sidebar />
         </GridItem>
