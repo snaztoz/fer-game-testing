@@ -59,12 +59,12 @@ export const recognizerSlice = createSlice({
     updateData: (state, action) => {
       // calculate the new average for each
       // listed expressions
+      state.data.count += 1;
       for (const [expr, val] of Object.entries(action.payload)) {
         const old = state.data.exprs[expr];
         state.data.exprs[expr] =
             old + (val - old) / state.data.count;
       }
-      state.data.count += 1;
     },
 
     updateTime: (state, action) => {
