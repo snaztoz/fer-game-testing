@@ -11,9 +11,9 @@ const blankExpressionData = () => ({
   disgusted: 0,
   fearful: 0,
   happy: 0,
-  neutral: 0,
   sad: 0,
   surprised: 0,
+  neutral: 0,
 });
 
 export const recognizerSlice = createSlice({

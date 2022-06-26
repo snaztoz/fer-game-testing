@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { updateData } from '../store/reducer/recognizer';
 
-const INTERVAL_DURATION = 500;
+const INTERVAL_DURATION = 300;
 
 export default function Webcam() {
   const isRecording = useSelector((state) => state.recognizer.status) == 'running';
