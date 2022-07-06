@@ -3,6 +3,7 @@ import WebcamExt from 'react-webcam';
 import * as faceapi from 'face-api.js';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { log } from '../store/reducer/log';
 import { updateData } from '../store/reducer/recognizer';
 
 const INTERVAL_DURATION = 300;
@@ -43,6 +44,15 @@ export default function Webcam() {
               // plain object first
               const {...plainDetection} = detection.expressions;
               dispatch(updateData(plainDetection));
+
+              const plainDetectionArr = Object
+                .keys(plainDetection)
+                .map(k => [k, plainDetection[k]]);
+              plainDetectionArr.sort((a, b) => b[1] - a[1]);
+
+              dispatch(log(
+                `dominant emotion: ${plainDetectionArr[0][0]} (${plainDetectionArr[0][1]})`
+              ))
             }
           });
       }, INTERVAL_DURATION);
