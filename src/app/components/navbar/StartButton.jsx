@@ -39,6 +39,7 @@ export default function StartButton() {
           onClick={() => {
             dispatch(start());
             dispatch(log('FER is running'));
+            window.open('tetris.html');
           }}
         />
       </span>
